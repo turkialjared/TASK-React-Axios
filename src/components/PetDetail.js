@@ -1,9 +1,17 @@
 import React from "react";
 import petsData from "../petsData";
 import { useParams } from "react-router-dom";
+import { onepet } from "../api/pets";
+import { useQuery } from "@tanstack/react-query";
 const PetDetail = () => {
   const { id } = useParams();
-  const pet = petsData[0];
+  // edit the line below
+  const response = useQuery({
+    queryKey: ["pets"],
+    queryFn: () => onepet(id),
+  });
+  const pet = response.data ?? {};
+  console.log(response?.data);
   return (
     <div className="bg-[#F9E3BE] w-screen h-[100vh] flex justify-center items-center">
       <div className="border border-black rounded-md w-[70%] h-[70%] overflow-hidden flex flex-col md:flex-row p-5">
